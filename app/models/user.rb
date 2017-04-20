@@ -3,6 +3,12 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :cats,
+  primary_key: :id,
+  foreign_key: :user_id,
+  class_name: :Cat
+
+
   #all these methods are on server's side
   def ensure_session_token
 
@@ -19,7 +25,7 @@ class User < ActiveRecord::Base
 
   def password=(password)
     @password = password  # ? why store password in instance var?
-    password_digest = BCrypt::Password.create(password)
+    self.password_digest = BCrypt::Password.create(password)
   end
 
   def is_password?(password)

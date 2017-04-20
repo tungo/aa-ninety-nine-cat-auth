@@ -1,0 +1,13 @@
+<h1>Input username and password</h1>
+
+<form action="<%= sessions_url %>" method="POST">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+
+  <label for="username">Username: </label>
+  <input id="username" type="text" name="user[username]" />
+
+  <label for="password">Password: </label>
+  <input id="password" type="text" name="user[password]" />
+ <!-- user[password] is declared here.  When user enters the pw via the form, the pw is stored in user[password], which is then later accessed by params[:user][:password] in the sessions_controller  -->
+  <input type='submit' value='Log In!' />
+</form>

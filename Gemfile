@@ -16,3 +16,6 @@ group :development do
   gem 'spring'
   gem 'pry-rails'
 end
+
+gem 'bcrypt'
+gem 'byebug'

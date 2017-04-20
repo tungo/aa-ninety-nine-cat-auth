@@ -8,7 +8,16 @@
 </head>
 <body>
 
-<%= yield %>
 
+<header>
+<% if current_user %>
+  <%= current_user.username %>
+  <%= button_to "Log out", session_url(current_user), method: :delete %>
+<% else %>
+
+<% end %>
+
+</header>
+<%= yield %>
 </body>
 </html>
