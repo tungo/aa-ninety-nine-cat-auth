@@ -6,26 +6,25 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :cats,
-  primary_key: :id,
-  foreign_key: :user_id,
-  class_name: :Cat
-
-  #all these methods are on server's side
-  def ensure_session_token
-
-  end
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :Cat
 
   def self.generate_session_token
     SecureRandom::urlsafe_base64(16)
   end
 
+  def ensure_session_token
+    self.session_token ||= self.class.generate_session_token
+  end
+
   def reset_session_token!
-    self.session_token = User.generate_session_token
+    self.session_token = self.class.generate_session_token
     self.save
   end
 
   def password=(password)
-    @password = password  # ? why store password in instance var?
+    @password = password
     self.password_digest = BCrypt::Password.create(password)
   end
 
@@ -34,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_credentials(username, password)
-    user = self.find_by(username: username) # NOT from params, username: from users table column 'username'
+    user = self.find_by(username: username)
     return user if user && user.is_password?(password)
     nil
   end
