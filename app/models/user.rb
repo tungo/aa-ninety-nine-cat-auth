@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  # add_index :session_token
+  validates :username, :password_digest, :session_token, presence: true
+  validates :username, uniqueness: true
+  validates :password, length: { minimum: 6, allow_nil: true }
 
   after_initialize :ensure_session_token
 
@@ -7,7 +9,6 @@ class User < ActiveRecord::Base
   primary_key: :id,
   foreign_key: :user_id,
   class_name: :Cat
-
 
   #all these methods are on server's side
   def ensure_session_token
