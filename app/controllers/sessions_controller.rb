@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if login_user!
+    user = User.find_by_credentials(user_params)
+    if login_user!(user)
       redirect_to cats_url
     else
       flash.now[:errors] = 'Can not login'
