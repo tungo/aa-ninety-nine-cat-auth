@@ -6,10 +6,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = login_user!
-    if user
+    if login_user!
       redirect_to cats_url
     else
+      flash.now[:errors] = 'Can not login'
       redirect_to new_session_url
     end
   end
