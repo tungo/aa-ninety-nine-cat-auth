@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :logged_in?, only: [:new]
+  before_action :check_logged_in, only: [:new, :create]
 
   def new
     render :new
@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  def logged_in?
+  def check_logged_in
     redirect_to cats_url if current_user
   end
 end
