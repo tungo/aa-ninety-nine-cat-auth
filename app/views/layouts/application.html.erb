@@ -11,10 +11,10 @@
 
 <header>
 <% if current_user %>
-  <%= current_user.username %>
+  <%= current_user.username %> logged in
   <%= button_to "Log out", session_url(current_user), method: :delete %>
 <% else %>
-
+  <%= link_to "log in", new_session_url %>
 <% end %>
 
 </header>
